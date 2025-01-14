@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@/components/ui/sheet';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { PageDataType } from '@/lib/contentful';
+import { PageDataType } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import NavbarLinkItem from './NavbarLinkItem';
 

@@ -39,3 +39,19 @@ export async function getTitleByPageId(page_id: string) {
   const typedRes = res as any;
   return typedRes.properties.Name.title[0].plain_text;
 }
+
+export async function getPageBySlug(database_id: string, slug: string) {
+  const res = await notion.databases.query({
+    database_id,
+    filter: {
+      property: 'Slug',
+      rich_text: {
+        equals: slug,
+      },
+    },
+  });
+
+  if (!res.results.length) return undefined;
+
+  return res.results[0];
+}

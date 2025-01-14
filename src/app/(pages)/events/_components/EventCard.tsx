@@ -4,7 +4,7 @@ import React from 'react';
 import { CldImage } from 'next-cloudinary';
 
 interface EventCardProps {
-  id: string;
+  slug: string;
   imgURL: string;
   title: string;
   venue: string;
@@ -13,10 +13,10 @@ interface EventCardProps {
   isUpcoming: boolean;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ id, imgURL, title, venue, time, description, isUpcoming }) => {
+const EventCard: React.FC<EventCardProps> = ({ slug, imgURL, title, venue, time, description, isUpcoming }) => {
   return (
     <Link
-      href={`/events/${id}`}
+      href={`/events/${slug}`}
       target="_blank"
       rel="noopener noreferrer"
       className="flex flex-col bg-white rounded-[30px] overflow-hidden shadow-md transition-transform duration-200 mt-12 max-w-md w-full relative hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"

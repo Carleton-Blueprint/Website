@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PageDataType } from '@/lib/contentful';
+import { PageDataType } from '@/lib/types';
 
 export default function NavbarLinkItem({ page }: { page: PageDataType }) {
   return (

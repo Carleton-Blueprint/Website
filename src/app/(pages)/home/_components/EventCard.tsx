@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function EventCard({ data }: { data: EventDataType }) {
   return (
     <div className="group">
-      <Link href={'/events/' + data.eventPageId} className="relative p-1">
+      <Link href={'/events/' + data.slug} className="relative p-1">
         <Card className="h-[23rem] md:h-[36rem] min-w-fit relative rounded-[50px] shadow-[0px_4px_4px_0_rgba(0,0,0,0.3)] overflow-hidden">
           <CldImage
             src={data.homePageURL || '/default'}

@@ -1,8 +1,9 @@
 import notion from '.';
-import { getPageIds } from './utils';
+import { getPageBySlug, getPageIds } from './utils';
 
 export type ProjectDataType = {
   pageId: string;
+  slug: string;
   companyName: string;
   productName: string | undefined | null;
   description: string | undefined | null;
@@ -24,39 +25,23 @@ export async function getProjectPageIds() {
 }
 
 export async function getFeaturedProjects() {
-  const projectPageIds = await getProjectPageIds();
-  const projects: ProjectDataType[] = [];
-
-  for (const pageId of projectPageIds) {
-    const page = (await notion.pages.retrieve({ page_id: pageId })) as any;
-    if (page.properties.Featured.checkbox) {
-      const companyName = page.properties.Name.title[0].plain_text;
-      const productName = page.properties['Product Name'].rich_text[0]?.plain_text || '';
-      const logoUrl = page.properties['Logo URL'].rich_text[0]?.plain_text || '/default';
-      const externalUrl = page.properties.URL.url;
-      const gitHubUrl = page.properties.gitHubUrl;
-      projects.push({
-        pageId,
-        companyName,
-        productName,
-        description: '',
-        year: '',
-        logoUrl,
-        externalUrl,
-        status: 'Done',
-        gitHubUrl,
-      });
-    }
-  }
-  return projects;
+  return await getProjects({ featuredOnly: true });
 }
 
-export async function getProjects() {
+export async function getProjects(options?: { featuredOnly: boolean }) {
+  const featuredOnly = options?.featuredOnly ?? false;
+
   const projectPageIds = await getProjectPageIds();
   const projects: ProjectDataType[] = [];
 
   for (const pageId of projectPageIds) {
     const page = (await notion.pages.retrieve({ page_id: pageId })) as any;
+
+    const isFeatured = page.properties.Featured.checkbox;
+
+    if (featuredOnly && !isFeatured) {
+      continue;
+    }
 
     const companyName = page.properties.Name.title[0].plain_text;
     const productName = page.properties['Product Name'].rich_text[0]?.plain_text;
@@ -66,6 +51,7 @@ export async function getProjects() {
     const externalUrl = page.properties.URL.url;
     const status = page.properties.Status.select.name;
     const gitHubUrl = page.properties.gitHubUrl.url;
+    const slug = page.properties.Slug.rich_text[0]?.plain_text || pageId;
 
     projects.push({
       pageId,
@@ -77,8 +63,13 @@ export async function getProjects() {
       externalUrl,
       status,
       gitHubUrl,
+      slug,
     });
   }
 
   return projects;
+}
+
+export async function getProjectPageBySlug(slug: string) {
+  return getPageBySlug(PROJECTS_DATABASE_ID, slug);
 }

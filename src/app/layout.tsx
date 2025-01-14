@@ -21,14 +21,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pages = [
+    { name: 'Projects', href: '/projects' },
+    { name: 'Events', href: '/events' },
+    { name: 'Students', href: '/students' },
+    { name: 'Contact', href: '/contact' },
+  ];
   return (
     <html lang="en">
       <Providers>
         <body className={`${poppins.className}`}>
-          <Navbar />
+          <Navbar pages={pages} />
           {children}
           <Toaster />
-          <Footer />
+          <Footer pages={pages} />
         </body>
       </Providers>
     </html>

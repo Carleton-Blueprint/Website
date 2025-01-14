@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "format": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "format-check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "format-write": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx",
+    "quality": "npm run format-check && npm run lint",
     "dev": "next dev",
-    "build": "npm run format && npm run lint && next build",
-    "start": "next start",
-    "lint": "npx eslint . --ext .ts,.tsx,.js,.jsx"
+    "build": "npm run quality && next build",
+    "start": "next start"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",
@@ -20,7 +22,6 @@
     "@types/uuid": "^9.0.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "contentful": "^10.8.6",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.3",
     "lucide-react": "^0.363.0",
@@ -34,11 +35,10 @@
     "react-icons": "^5.0.1",
     "react-notion-x": "^6.16.0",
     "resend": "^3.5.0",
-    "sharp": "^0.33.4",
+    "sharp": "^0.33.5",
     "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "typewriter-effect": "^2.21.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

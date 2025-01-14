@@ -11,7 +11,7 @@ const EventsPage: React.FC = async () => {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-16 lg:px-12">
           {res.map(event => (
             <EventCard
-              id={event.eventPageId}
+              slug={event.slug}
               key={event.eventName}
               imgURL={event.coverURL}
               title={event.eventName}
